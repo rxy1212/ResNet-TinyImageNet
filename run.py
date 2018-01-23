@@ -127,7 +127,7 @@ def main():
             best_acc = acc
             print(fore.LIGHT_BLUE +
                   f'Got current best_acc:{best_acc:.2f}%, Saving...' + style.RESET)
-            save(net, f'ResNet')
+            save(net, 'ResNet')
         current_lr = optimizer.param_groups[0]['lr']
         print(f'current lr:{current_lr}')
     print('-------------------------------')
