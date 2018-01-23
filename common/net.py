@@ -16,9 +16,7 @@ class ResNet(nn.Module):
     def __init__(self, num_classes=200):
         super(ResNet, self).__init__()
         self.toplayer = nn.Sequential(
-            nn.Conv2d(3, 64, 3, padding=1),
-            nn.BatchNorm2d(64),
-            nn.ReLU(True)
+            BasicConv2d(3, 64, 3, padding=1)
         )
         self.block1 = nn.Sequential(
             Block(64, 32, 64),
@@ -54,7 +52,6 @@ class ResNet(nn.Module):
 
     def forward(self, x):
         x = self.toplayer(x)
-        print(x.size())
         x = self.block1(x)
         x = self.block2(x)
         x = self.block3(x)
@@ -92,6 +89,7 @@ class Block(nn.Module):
             nn.Conv2d(planes, out_channels, 1, bias=False),
             nn.BatchNorm2d(out_channels)
         )
+        self.relu = nn.ReLU(True)
 
     def forward(self, x):
         residual = x
@@ -100,7 +98,7 @@ class Block(nn.Module):
         out = self.in_layer(x)
         out = self.out_layer(out)
         out += residual
-        out = nn.ReLU(True)
+        out = self.relu(out)
         return out
 
 
@@ -118,8 +116,7 @@ class BasicConv2d(nn.Module):
 
 
 
-net = ResNet()
-print(net)
-x = torch.randn(1, 3, 64, 64)
-y = net(Variable(x))
-print(y.size())
+# net = ResNet()
+# x = torch.randn(1, 3, 64, 64)
+# y = net(Variable(x))
+# print(y.size())
