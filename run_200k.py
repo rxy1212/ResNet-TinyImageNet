@@ -103,15 +103,17 @@ def main():
     os.environ["CUDA_VISIBLE_DEVICES"] = "3"
     torch.cuda.is_available()
 
-    train_loader = data.DataLoader(TIN200Data('/data1'), 128, True, num_workers=4)
-    val_loader = data.DataLoader(TIN200Data('/data1', 'val'), 128, num_workers=4)
+    train_loader = data.DataLoader(TIN200Data(
+        '/data1/fliped-tiny-imagenet-200'), 128, True, num_workers=4)
+    val_loader = data.DataLoader(TIN200Data(
+        '/data1/fliped-tiny-imagenet-200', 'val'), 128, num_workers=4)
 
     net = ResNet().cuda()
     net = torch.nn.DataParallel(net, device_ids=range(torch.cuda.device_count()))
     cudnn.benchmark = True
 
     optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9, weight_decay=5e-4)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', verbose=True, patience=4)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', verbose=True, patience=3)
     # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[10, 20, 30], gamma=0.1)
     loss_fn = nn.CrossEntropyLoss()
 

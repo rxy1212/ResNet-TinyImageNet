@@ -35,9 +35,8 @@ class TIN200Data(data.Dataset):
         self.data_dir = data_dir
         self.loader = loader
         self.transform = transform
-        self.root = pjoin(root, 'fliped-tiny-imagenet-200')
-        self.label_map_path = pjoin(
-            root, 'fliped-tiny-imagenet-200', 'wnids.txt')
+        self.root = root
+        self.label_map_path = pjoin(root, 'wnids.txt')
 
         with open(self.label_map_path, 'r') as f:  # wnids.txt
             content = [x.strip() for x in f.readlines()]
