@@ -111,7 +111,7 @@ def main():
     cudnn.benchmark = True
 
     optimizer = optim.SGD(net.parameters(), lr=0.1, momentum=0.9, weight_decay=5e-4)
-    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', verbose=True, patience=6)
+    scheduler = optim.lr_scheduler.ReduceLROnPlateau(optimizer, 'max', verbose=True, patience=4)
     # scheduler = optim.lr_scheduler.MultiStepLR(optimizer, milestones=[10, 20, 30], gamma=0.1)
     loss_fn = nn.CrossEntropyLoss()
 
@@ -127,7 +127,7 @@ def main():
             best_acc = acc
             print(fore.LIGHT_BLUE +
                   f'Got current best_acc:{best_acc:.2f}%, Saving...' + style.RESET)
-            save(net, 'GoogLeNet')
+            save(net, f'ResNet')
         current_lr = optimizer.param_groups[0]['lr']
         print(f'current lr:{current_lr}')
     print('-------------------------------')

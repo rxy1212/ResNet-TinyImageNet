@@ -42,13 +42,8 @@ class ResNet(nn.Module):
             Block(512, 256, 512),
             Block(512, 256, 512)
         )
-        self.pool = nn.AvgPool2d(4, 4)
-        self.fcn = nn.Sequential(
-            nn.Linear(2 * 2 * 512, 1000),
-            nn.ReLU(True),
-            nn.Dropout(),
-            nn.Linear(1000, num_classes, bias=False)
-        )
+        self.pool = nn.AvgPool2d(8, 8)
+        self.fcn = nn.Linear(1 * 1 * 512, num_classes, bias=False)
 
     def forward(self, x):
         x = self.toplayer(x)
@@ -116,7 +111,7 @@ class BasicConv2d(nn.Module):
 
 
 
-# net = ResNet()
-# x = torch.randn(1, 3, 64, 64)
-# y = net(Variable(x))
-# print(y.size())
+net = ResNet()
+x = torch.randn(1, 3, 64, 64)
+y = net(Variable(x))
+print(y.size())
