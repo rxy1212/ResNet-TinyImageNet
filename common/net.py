@@ -111,7 +111,7 @@ class BasicConv2d(nn.Module):
 
 
 
-net = ResNet()
-x = torch.randn(1, 3, 64, 64)
-y = net(Variable(x))
-print(y.size())
+# net = ResNet()
+# x = torch.randn(1, 3, 64, 64)
+# y = net(Variable(x))
+# print(y.size())
