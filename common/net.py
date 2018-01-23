@@ -43,7 +43,7 @@ class ResNet(nn.Module):
             Block(512, 256, 512)
         )
         self.pool = nn.AvgPool2d(8, 8)
-        self.fcn = nn.Linear(1 * 1 * 512, num_classes, bias=False)
+        self.fcn = nn.Linear(512, num_classes, bias=False)
 
     def forward(self, x):
         x = self.toplayer(x)
