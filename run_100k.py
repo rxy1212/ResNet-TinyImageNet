@@ -100,7 +100,7 @@ def predict(net, name, loader):
 
 
 def main():
-    os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
     torch.cuda.is_available()
 
     train_loader = data.DataLoader(TIN200Data(
@@ -129,7 +129,7 @@ def main():
             best_acc = acc
             print(fore.LIGHT_BLUE +
                   f'Got current best_acc:{best_acc:.2f}%, Saving...' + style.RESET)
-            save(net, 'ResNet_200k')
+            save(net, 'ResNet_100k')
         current_lr = optimizer.param_groups[0]['lr']
         print(f'current lr:{current_lr}')
     print('-------------------------------')
