@@ -43,8 +43,13 @@ class ResNet(nn.Module):
             Block(512, 256, 512),
             Block(512, 256, 512)
         )
-        self.pool = nn.AvgPool2d(8, 8)
-        self.fcn = nn.Linear(512, num_classes, bias=False)
+        self.pool = nn.AvgPool2d(4, 4)
+        self.fcn = nn.Sequential(
+            nn.Linear(2 * 2 * 512, 1000),
+            nn.ReLU(True),
+            nn.Dropout(),
+            nn.Linear(1000, num_classes, bias=False)
+        )
 
         for m in self.modules():
             if isinstance(m, nn.Conv2d):
@@ -95,7 +100,6 @@ class Block(nn.Module):
         )
         self.relu = nn.ReLU(True)
 
-        
 
     def forward(self, x):
         residual = x
